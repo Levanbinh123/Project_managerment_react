@@ -4,35 +4,47 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { PlusIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import React, {useEffect} from 'react'
 import InviteUserForm from './InviteUserForm'
 import IssueList from './IssueList'
 import ChatBox from './ChatBox'
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {fetchProjectById} from "@/Redux/Project/Action.js";
 
 const ProjectDetails = () => {
-    const handleProjectInvitation=()=>{
-      
-    }
+  const dispatch=useDispatch();
+const{project}=useSelector(store=>store);
+  const { id } = useParams();
+
+  const handleProjectInvitation = () => {
+    // xử lý mời user
+  };
+  useEffect(() => {
+    if (id) dispatch(fetchProjectById(id ));
+  }, [id, dispatch]);
+
+  const { projectDetails } = project;
   return (
     <>
       <div className='mt-5 lg:px-10'>
         <div className='lg:flex gap-5 justify-between pb-4'>
           <ScrollArea className="h-screen lg:w-[69%] pr-2">
             <div className='text-gray-400 pb-10 w-full'>
-              <h1 className='text-lg font-semibold pb-5'>Create Ecommerce Website Using React</h1>
+              <h1 className='text-lg font-semibold pb-5'>Create Ecommerce Website Using </h1>
               <div className='space-y-5 pb-10 text-sm'>
-                <p className='w-full md:max-w-lg lg:max-w-xl'>Chào mừng bạn đến với thế giới của tôi</p>
+                <p className='w-full md:max-w-lg lg:max-w-xl'>Chào mừng bạn đến với thế giới của mình</p>
               </div>
               <div className='flex pb-5'>
-                <p className='w-36'>Project Lead :</p>
-                <p>Code with Me</p>
+                <p className='w-36'>Project name :</p>
+                <p>{projectDetails?.name}</p>
               </div>
               <div className='flex pb-5'>
                 <p className='w-36'>Members :</p>
                 <div className='flex items-center gap-2'>
                   
-                  {[1,1,1,1].map((item)=><Avatar className="cursor-pointer" key={item}>
-                    <AvatarFallback>Z</AvatarFallback>
+                  {projectDetails?.team?.map((item)=><Avatar className="cursor-pointer" key={item}>
+                    <AvatarFallback>{item?.fullName.charAt(0)}</AvatarFallback>
                   </Avatar>)}
 
                 </div>
@@ -53,11 +65,11 @@ const ProjectDetails = () => {
               </div>
               <div className='flex pb-5'>
                 <p className='w-36'>Catetory :</p>
-                <p>Full Stack</p>
+                <p>{projectDetails?.category}</p>
               </div>
               <div className='flex pb-5'>
                 <p className='w-36'>Project Lead :</p>
-                <Badge>An</Badge>
+                <Badge>{projectDetails?.owner?.fullName}</Badge>
               </div>
 
               <section>

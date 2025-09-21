@@ -3,19 +3,22 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import {useDispatch} from "react-redux";
+import {login} from "@/Redux/Auth/Action.js";
 
 const Login = () => {
+    const dispatch=useDispatch();
         const form=useForm({
                     //resolver:zod
                     defaultValues:{
                         email:"",
                         password:"",
-    
                     }
                 })
         
                 const onSubmit=(data)=>{
-                    console.log("create project data", data)
+            dispatch(login(data));
+                    console.log("login data", data)
                 }
   return (
     <div className='space-y-5'>
@@ -53,8 +56,8 @@ const Login = () => {
                         </FormItem>}
                     />
 
-                            <Button type="submit" className="w-full mt-5">
-                                Register
+                            <Button  type="submit" className="w-full mt-5">
+                                Login
                             </Button>
                 </form>
             </Form>

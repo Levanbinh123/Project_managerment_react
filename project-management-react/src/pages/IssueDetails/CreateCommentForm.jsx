@@ -4,18 +4,21 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import {useDispatch} from "react-redux";
+import {createComment} from "@/Redux/Comment/Action.js";
 
 const CreateCommentForm = ({issueId}) => {
+    const dispatch=useDispatch();
       const form=useForm({
                     //resolver:zod
                     defaultValues:{
                         content:"",
-    
                     }
                 })
-        
                 const onSubmit=(data)=>{
+          dispatch(createComment({content: data.content,issueId}))
                     console.log("create project data", data)
+                    
                 }
   return (
     <div>

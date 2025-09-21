@@ -5,18 +5,31 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Input } from '@/components/ui/input'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import {useDispatch} from "react-redux";
+import {createIssues} from "@/Redux/Issue/Action.js";
+import {useParams} from "react-router-dom";
 
-const CreateIssueForm = () => {
+const CreateIssueForm = ({status}) => {
+    const dispatch=useDispatch();
+    const {id}=useParams();
+
    const form=useForm({
                   //resolver:zod
                   defaultValues:{
-                      issuaName:"",
+                      issueName:"",
                       description:""
                   }
               })
       
               const onSubmit=(data)=>{
-                  console.log("create project data", data)
+       data.projectId=id;
+                dispatch(createIssues({
+                     title:data.issueName,
+                      description : data.description,
+                      projectId : id,
+                        status,
+                }));
+                  console.log("created issue data", data)
               }
   return (
     <div>

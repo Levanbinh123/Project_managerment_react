@@ -7,14 +7,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import {useDispatch} from "react-redux";
+import {createProjects} from "@/Redux/Project/Action.js";
  const CreateProjectForm  = ()   => {
-            const handleTagsChange=(newValue)=>{
-                const currentTags=form.getValues("tags");
-
-                const updatedTags = currentTags.includes(newValue)?
-                currentTags.filter(tag => tag !== newValue):[...currentTags, newValue];
-                form.setValue("tags", updatedTags)
-            }
+    const dispatch=useDispatch();
         const form=useForm({
             //resolver:zod
             defaultValues:{
@@ -24,9 +20,15 @@ import { Cross1Icon } from "@radix-ui/react-icons";
                 tags:["javascript", "react"]
             }
         })
-
+     const handleTagsChange=(newValue)=>{
+         const currentTags=form.getValues("tags");
+         const updatedTags = currentTags.includes(newValue)?
+             currentTags.filter(tag => tag !== newValue):[...currentTags, newValue];
+         form.setValue("tags", updatedTags)
+     }
         const onSubmit=(data)=>{
-            console.log("create project data", data)
+            dispatch(createProjects(data));
+            console.log("created project data", data)
         }
     return (
         <div>
@@ -57,7 +59,6 @@ import { Cross1Icon } from "@radix-ui/react-icons";
                         <FormMessage/>
                     </FormItem>}
                 />
-
 
                    <FormField control={form.control}
                     name="category"
