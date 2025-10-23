@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import {useDispatch} from "react-redux";
-import {createComment} from "@/Redux/Comment/Action.js";
+import {createComment, fetchComments} from "@/Redux/Comment/Action.js";
 
 const CreateCommentForm = ({issueId}) => {
     const dispatch=useDispatch();
@@ -16,15 +16,17 @@ const CreateCommentForm = ({issueId}) => {
                     }
                 })
                 const onSubmit=(data)=>{
-          dispatch(createComment({content: data.content,issueId}))
+                dispatch(createComment({content: data.content,issueId}))
                     console.log("create project data", data)
-                    
+                    dispatch(fetchComments(issueId));
+                    form.reset({ content: "" });
                 }
+
   return (
     <div>
             <Form {...form}>
                 <form className="flex gap-2" onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField 
+                    <FormField
                     control={form.control}
                     name="content"
                     render={({field})=>
@@ -42,7 +44,7 @@ const CreateCommentForm = ({issueId}) => {
                             placeholder="add comment here..."/>
                         </FormControl>
                         </div>
- 
+
                         <FormMessage/>
                     </FormItem>}
                     />

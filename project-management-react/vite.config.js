@@ -7,7 +7,15 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      // eslint-disable-next-line no-undef
       "@": path.resolve(__dirname, "./src"),
+      global: 'globalThis'
     },
+  },  define: {
+    global: 'globalThis',
   },
+  server: {
+    port: 5173,
+    host: true
+  }
 })

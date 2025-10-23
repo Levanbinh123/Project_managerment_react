@@ -22,7 +22,7 @@ export const createComment=(commentData)=>{
         }
     };
 };
-export const deleteComment=(commentId, issueId)=>{
+export const deleteComment=(commentId)=>{
     return async (dispatch)=>{
         dispatch({type:actionTypes.DELETE_COMMENT_REQUEST});
         try {
@@ -30,8 +30,9 @@ export const deleteComment=(commentId, issueId)=>{
                 `/api/comments/${commentId}`
             );
             console.log(response)
-            dispatch({type:actionTypes.DELETE_COMMENT_SUCCESS,commentId});
-            dispatch(fetchComments(issueId));
+            dispatch({type:actionTypes.DELETE_COMMENT_SUCCESS,
+                commentId: commentId});
+            return response;
         }catch (e) {
             console.log("error", e);
             dispatch({
@@ -48,17 +49,15 @@ export const fetchComments=(issueId)=>{
             type:actionTypes.FETCH_COMMENT_REQUEST
         });
         try {
-            const { data } =await api.get(
+            const response=await api.get(
                 `/api/comments/${issueId}`
             );
 
-            console.log("fetch"+data);
-
             dispatch({
                 type:actionTypes.FETCH_COMMENT_SUCCESS,
-                payload:data||[],
+                payload:response.data,
             })
-            console.log("fetchs comment",data)
+            console.log("fetchs comment",response.data)
         }catch (e) {
             console.log("error",e)
 dispatch({

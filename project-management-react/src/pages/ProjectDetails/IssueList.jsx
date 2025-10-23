@@ -42,8 +42,8 @@ const IssueList = ({title, status}) => {
                 </DialogTrigger>
             </CardFooter>
             </Card>
-            <DialogContent>
-                <DialogHeader>
+            <DialogContent className="bg-white text-gray-900 border-gray-200" >
+                <DialogHeader >
                     <DialogTitle>Create New Issue</DialogTitle>
                 </DialogHeader>
                 <CreateIssueForm status={status}/>

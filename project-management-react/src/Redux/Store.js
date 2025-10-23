@@ -6,6 +6,7 @@ import chatReducer from "@/Redux/Chat/Reducer.js";
 import commentReducer from "@/Redux/Comment/Reducer.js";
 import issueReducer from "@/Redux/Issue/Reducer.js";
 import subscriptionReducer from "@/Redux/Subscription/Reducer.js";
+import userReducer from "@/Redux/User/Reducer.js";
 
 // tạo rootReducer (ví dụ rỗng, sau này thêm reducer vào)
 const rootReducer
@@ -16,6 +17,7 @@ const rootReducer
     comment:commentReducer,
     issue:issueReducer,
     subscription: subscriptionReducer,
+    user:userReducer
 });
 
 // tạo store

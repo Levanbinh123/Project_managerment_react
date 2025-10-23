@@ -14,7 +14,7 @@ import {
     SEARCH_PROJECT_REQUEST,
     SEARCH_PROJECT_SUCCESS
 } from "@/Redux/Project/ActionTypes.js";
-import api, {API_BASE_URL} from "@/config/api.js";
+import api from "@/config/api.js";
 export const fetchProjects = ({ category, tag }={}  ) => async (dispatch) => {
     dispatch({ type: FETCH_PROJECT_REQUEST });
     try {
@@ -82,9 +82,8 @@ export const inviteToProjects = ({ email, projectId }) => async (dispatch) => {
 export const accceptInvitation = ({ invitationToken, navigate }) => async (dispatch) => {
     dispatch({ type: ACCEPT_INVITATION_PROJECT_REQUEST });
     try {
-        const { data } = await api.post(
-            "/api/projects/invite/accept_invitation",
-            null,
+        const { data } = await api.get(
+            "/api/projects/accept_invitation",
             { params: { token: invitationToken } }
         );
         navigate("/project/" + data.projectId);

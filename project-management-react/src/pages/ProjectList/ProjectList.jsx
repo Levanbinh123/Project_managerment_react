@@ -11,6 +11,7 @@ import ProjectCard from "../Project/ProjectCard";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProjects, searchProjects} from "@/Redux/Project/Action.js";
 
+// eslint-disable-next-line react-refresh/only-export-components
     export const tags = [
         "all",
         "react",
@@ -27,9 +28,6 @@ import {fetchProjects, searchProjects} from "@/Redux/Project/Action.js";
         const dispatch=useDispatch();
         const { project } = useSelector((store) => store);
             const [keyword,setKeyword]=useState("");
-        const handleFilterChange = (section,value) => {
-            console.log("value",value,section)
-    }
         const handleFilterTag = ( value) => {
             dispatch(fetchProjects({ tag: value === "All" ? undefined : value }));
         };

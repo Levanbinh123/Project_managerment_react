@@ -30,7 +30,7 @@ const IssueCard = ({item,projectId}) => {
                         <DropdownMenuTrigger>
                             <Button className="rounded-full" size="icon" variant="ghost"><DotsVerticalIcon/></Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
+                        <DropdownMenuContent className="bg-white border border-gray-200 shadow-md rounded-xl">
                             <DropdownMenuItem>In Progress</DropdownMenuItem>
                             <DropdownMenuItem>Done</DropdownMenuItem>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -44,7 +44,7 @@ const IssueCard = ({item,projectId}) => {
                 <div className='flex items-center justify-between'>
                     <p>FBF - {item.id}</p>
                     <DropdownMenu className="w-[30rem] border border-red-400">
-                        <DropdownMenuTrigger>
+                        <DropdownMenuTrigger className="bg-white border border-gray-200 shadow-md rounded-xl">
                             <Button 
                             size="icon"
                             className="bg-gray-900 hover:text-black text-white rounded-full">

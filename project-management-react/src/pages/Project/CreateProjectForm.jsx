@@ -7,137 +7,161 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import {useDispatch} from "react-redux";
-import {createProjects} from "@/Redux/Project/Action.js";
- const CreateProjectForm  = ()   => {
-    const dispatch=useDispatch();
-        const form=useForm({
-            //resolver:zod
-            defaultValues:{
-                name:"",
-                description:"",
-                category:"",
-                tags:["javascript", "react"]
-            }
-        })
-     const handleTagsChange=(newValue)=>{
-         const currentTags=form.getValues("tags");
-         const updatedTags = currentTags.includes(newValue)?
-             currentTags.filter(tag => tag !== newValue):[...currentTags, newValue];
-         form.setValue("tags", updatedTags)
-     }
-        const onSubmit=(data)=>{
-            dispatch(createProjects(data));
-            console.log("created project data", data)
-        }
+import { useDispatch } from "react-redux";
+import { createProjects } from "@/Redux/Project/Action.js";
+
+const CreateProjectForm = () => {
+    const dispatch = useDispatch();
+
+    const form = useForm({
+        defaultValues: {
+            name: "",
+            description: "",
+            category: "",
+            tags: ["react"],
+        },
+    });
+
+    const handleTagsChange = (newValue) => {
+        const currentTags = form.getValues("tags");
+        const updatedTags = currentTags.includes(newValue)
+            ? currentTags.filter((tag) => tag !== newValue)
+            : [...currentTags, newValue];
+        form.setValue("tags", updatedTags);
+    };
+
+    const onSubmit = (data) => {
+        dispatch(createProjects(data));
+        console.log("Created project data:", data);
+    };
+
     return (
-        <div>
+        <div className="bg-white p-6 rounded-2xl shadow-xl">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+                Create New Project
+            </h2>
+
             <Form {...form}>
                 <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField control={form.control}
-                    name="name"
-                    render={({field})=><FormItem>
-                        <FormControl>
-                            <Input {...field}
-                            type="text"
-                            className="border w-full border-gray-700 py-5 px-5"
-                            placeholder="project name..."/>
-                        </FormControl>
-                        <FormMessage/>
-                    </FormItem>}
+                    {/* Project Name */}
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        className="w-full border border-gray-300 rounded-xl py-3 px-5 text-gray-700 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                                        placeholder="Project name..."
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
                     />
 
-                <FormField control={form.control}
-                    name="description"
-                    render={({field})=><FormItem>
-                        <FormControl>
-                            <Input {...field}
-                            type="text"
-                            className="border w-full border-gray-700 py-5 px-5"
-                            placeholder="project decription..."/>
-                        </FormControl>
-                        <FormMessage/>
-                    </FormItem>}
-                />
-
-                   <FormField control={form.control}
-                    name="category"
-                    render={({field})=><FormItem>
-                        <FormControl>
-                            <Select
-                                defaultValues="fullstack"
-                                value={field.value}
-                                onValueChange={(value)=>{
-                                    field.onChange(value)
-                                }}
-                                >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Category"/>
-                                </SelectTrigger>
-
-                                <SelectContent>
-                                    <SelectItem value="fullstack">Full Stack</SelectItem>
-                                    <SelectItem value="frontend">Frontend</SelectItem>
-                                    <SelectItem value="backend">Backend</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </FormControl>
-                        <FormMessage/>
-                    </FormItem>}
-                     />
-
-                    <FormField 
-                     control={form.control}
-                     name="tags"
-                     render={({ field })=> 
-                        <FormItem>
-                            <FormControl>
-                                <Select
-
-                                    onValueChange={(value)=>{
-                                    handleTagsChange(value)
-                                    }}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Tags"/>
-                                    </SelectTrigger>
-
-                                    <SelectContent>
-                                        {tags.map((item) => (
-                                            <SelectItem key={item} value={item}>
-                                                {item}
-                                            </SelectItem> 
-                                        ))}      
-                                        
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                                {field.value.map((item)=> <div key={item} onClick={()=> handleTagsChange(item)} className="flex gap-1 flex-wrap">
-                                    <div className="cursor-pointer flex rounded-full items-center border gap-2 px-4 py-1">
-                                        <span className="text-sm">{item}</span>
-                                        <Cross1Icon className="h-3 w-3"/>
-                                    </div>
-                                </div>) }          
-
-                            <FormMessage/>
-                        </FormItem>}
-                     />
-
-                    <DialogClose>
-                        {false ? (
-                        <div>
-                            <p>Bạn có thể tạo 3 project miễn phí, làm ơn hãy cập nhật dự án của bạn</p>
-                        </div>
-                        ) : (
-                            <Button type="submit" className="w-full mt-5">
-                            Create Project
-                            </Button>
+                    {/* Description */}
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        className="w-full border border-gray-300 rounded-xl py-3 px-5 text-gray-700 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                                        placeholder="Project description..."
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
                         )}
+                    />
+
+                    {/* Category */}
+                    <FormField
+                        control={form.control}
+                        name="category"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Select
+                                        value={field.value}
+                                        onValueChange={(value) => {
+                                            field.onChange(value);
+                                        }}
+                                    >
+                                        <SelectTrigger className="w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-200">
+                                            <SelectValue placeholder="Category" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-white border border-gray-200 shadow-md rounded-xl">
+                                            <SelectItem value="fullstack">Full Stack</SelectItem>
+                                            <SelectItem value="frontend">Frontend</SelectItem>
+                                            <SelectItem value="backend">Backend</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Tags */}
+                    <FormField
+                        control={form.control}
+                        name="tags"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Select onValueChange={(value) => handleTagsChange(value)}>
+                                        <SelectTrigger className="w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-200">
+                                            <SelectValue placeholder="Tags" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-white border border-gray-200 shadow-md rounded-xl">
+                                            {tags.map((item) => (
+                                                <SelectItem key={item} value={item}>
+                                                    {item}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+
+                                {/* Selected Tags */}
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {field.value.map((item) => (
+                                        <div
+                                            key={item}
+                                            onClick={() => handleTagsChange(item)}
+                                            className="cursor-pointer flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition"
+                                        >
+                                            <span>{item}</span>
+                                            <Cross1Icon className="h-3 w-3" />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Submit */}
+                    <DialogClose asChild>
+                        <Button
+                            type="submit"
+                            className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition"
+                        >
+                            Create Project
+                        </Button>
                     </DialogClose>
                 </form>
             </Form>
         </div>
-    )
- }
+    );
+};
 
- export default CreateProjectForm
+export default CreateProjectForm;

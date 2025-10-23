@@ -13,33 +13,35 @@ import {fetchComments} from "@/Redux/Comment/Action.js";
 
 
 const IssueDetails = () => {
-    const { projectId, issueId } = useParams();
+    const {  issueId } = useParams();
     const dispatch=useDispatch();
     const { issue} = useSelector(store => store);
-    const { comment } = useSelector((store) => store);
+    const { comment } = useSelector(store => store);
+
     const handleUpdateIssueStatus = (status) => {
         dispatch(updateIssue({ status, id:issueId}))
         console.log("Updated status:", status);
     };
     useEffect(()=>{
-        dispatch(fetchIssueById(issueId));
+        if(issueId)
         dispatch(fetchComments(issueId))
+        dispatch(fetchIssueById(issueId))
 
     },[dispatch, issueId ])
-
+    const { issueDetails } = issue;
   return (
-    <div className='px-20 py-8 text-gray-400'>
+    <div className='px-20 py-8 text-gray-700'>
         <div className='flex justify-between border p-10 rounded-lg'>
             <ScrollArea className="h-[80vh] w-[60%]">
                 <div>
-                    <h1 className='text-lg font-semibold text-gray-400'>{issue.issueDetails?.name}</h1>
+                    <h1 className='text-lg font-semibold text-gray-700'>{issueDetails?.name}</h1>
                     <div className='py-5'>
-                        <h2 className='font-semibold text-gray-400'>Title</h2>
-                        <p className='text-gray-400 text-sm mt-3'>{issue.issueDetails?.title}</p>
+                        <h2 className='font-semibold text-gray-700'>Title</h2>
+                        <p className='text-gray-700 text-sm mt-3'>{issueDetails?.title}</p>
                     </div>
                     <div className='py-5'>
-                        <h2 className='font-semibold text-gray-400'>Description</h2>
-                        <p className='text-gray-400 text-sm mt-3'>{issue.issueDetails?.description}</p>
+                        <h2 className='font-semibold text-gray-700'>Description</h2>
+                        <p className='text-gray-700 text-sm mt-3'>{issueDetails?.description}</p>
                     </div>
                     <div className='mt-5'>
                         <h1 className='pb-3'>Activity</h1>
@@ -61,11 +63,10 @@ const IssueDetails = () => {
                             <TabsContent value="comments">
                                 <CreateCommentForm issueId={issueId}/>
                                 <div className='mt-8 space-y-6'>
-                                    {comment.comments && comment.comments.length > 0 ? (
-                                        comment.comments.map((item, index) => <CommentCard key={index} item={item} />)
-                                    ) : (
-                                        <p className="text-gray-500">No comments yet</p>
-                                    )}
+                                    {
+                                        comment.comments.map((item) =>
+                                        <CommentCard key={item.id} item={item} issueId={issueId} />)
+                                    }
                                 </div>
                             </TabsContent>
                             <TabsContent value="history">
@@ -76,11 +77,11 @@ const IssueDetails = () => {
                 </div>
             </ScrollArea>
             <div className='w-full lg:w-[30%] space-y-2'>
-                <Select onValueChange={handleUpdateIssueStatus}>
+                <Select  onValueChange={handleUpdateIssueStatus}>
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="To Do" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent  className="bg-white text-gray-900 border-gray-200">
                         <SelectItem value="pending">To Do</SelectItem>
                         <SelectItem value="in_progress">In Progress</SelectItem>
                         <SelectItem value="done">Done</SelectItem>

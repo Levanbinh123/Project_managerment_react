@@ -9,7 +9,6 @@ const issueReducer = (state = initialState, action) => {
     switch (action.type) {
         // ===== Fetch issues =====
         case actionTypes.FETCH_ISSUES_REQUEST:
-        case actionTypes.CREATE_ISSUES_SUCCESS:
         case actionTypes.ASSIGNED_ISSUE_TO_USER_REQUEST:
         case actionTypes.DELETE_ISSUE_REQUEST:
         case actionTypes.FETCH_ISSUES_BY_ID_REQUEST:

@@ -24,7 +24,9 @@ const commentReducer=(state=initialState, action)=>{
             return {
                 ...state,
                 loading: false,
-                comments: state.comments.filter((comment)=>comment.id!==action.commentId)
+                comments: state.comments.filter(
+                    (comment) => String(comment.id) !== String(action.commentId)
+                )
             };
         case actionTypes.FETCH_COMMENT_SUCCESS:
             return {
