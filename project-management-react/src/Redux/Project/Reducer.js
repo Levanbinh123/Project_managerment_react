@@ -10,7 +10,7 @@ import {
     FETCH_PROJECT_SUCCESS,
     INVITE_PROJECT_REQUEST,
     SEARCH_PROJECT_REQUEST,
-    SEARCH_PROJECT_SUCCESS
+    SEARCH_PROJECT_SUCCESS, UPDATE_PROJECT_REQUEST, UPDATE_PROJECT_SUCCESS
 } from "@/Redux/Project/ActionTypes.js";
 const initialState = {
     projects: [],          // danh sách project
@@ -28,6 +28,7 @@ export const projectReducer = (state = initialState, action) => {
         case INVITE_PROJECT_REQUEST:
         case SEARCH_PROJECT_REQUEST:
         case CREATE_PROJECT_REQUEST:
+        case UPDATE_PROJECT_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -70,6 +71,20 @@ export const projectReducer = (state = initialState, action) => {
                 ),
                 error: null
             };
+        case UPDATE_PROJECT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                projects: state.projects.map((p) =>
+                    p.id === action.project.id ? action.project : p
+                ),
+                projectDetails:
+                    state.projectDetails?.id === action.project.id
+                        ? action.project
+                        : state.projectDetails,
+                error: null
+            };
+
         default:
             return state;
     }

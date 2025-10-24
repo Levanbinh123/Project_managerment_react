@@ -27,12 +27,10 @@ dispatch(logout());
     };
 const userRole=auth?.user?.role;
   return (
-    <div className="bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 text-white shadow-lg px-6 py-4 flex items-center justify-between">
+    <div className="bg-gradient-to-r bg-blue-500 text-white shadow-lg px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
             <p onClick={()=>navigate("/")} className="cursor-pointer">Project Management</p>
-
             <Dialog>
-                
                 <DialogTrigger >
                     <Button variant="ghost">New Project</Button>
                 </DialogTrigger>
@@ -43,7 +41,7 @@ const userRole=auth?.user?.role;
                     <CreateProjectForm />
                 </DialogContent>
             </Dialog>
-            <Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button>
+            {/*<Button onClick={()=>navigate("/upgrade_plan")} variant="ghost">Upgrade</Button>*/}
             {userRole==="ROLE_ADMIN"&&(
                 <Button onClick={()=>navigate("/admin")} variant="ghost">User Management</Button>
             )}

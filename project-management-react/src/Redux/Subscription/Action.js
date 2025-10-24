@@ -1,4 +1,5 @@
 import * as types from "./ACtionType.js"
+import api from "@/config/api.js";
 export const getUserSubscription=(jwt)=>{
     return async (dispatch)=>{
         dispatch({
@@ -26,7 +27,7 @@ export const getUserSubscription=(jwt)=>{
     };
 };
 
-export const upgradeSubscription=({planType}){
+export const upgradeSubscription=({planType})=>{
     return async (dispatch)=>{
         dispatch({
             type:types.UPGRADE_SUPSCRIPTION_REQUEST

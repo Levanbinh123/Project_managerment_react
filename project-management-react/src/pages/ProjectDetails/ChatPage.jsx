@@ -61,10 +61,7 @@ const ChatPage = () => {
             createdAt: new Date().toISOString(),
         };
 
-        // ⚡ Hiển thị ngay trong UI
         setMessages((prev) => [...prev, tempMessage]);
-
-        // 🔥 Gửi qua WebSocket (server sẽ broadcast lại bản chính)
         sendSocketMessage(id, tempMessage);
 
         setMessage("");

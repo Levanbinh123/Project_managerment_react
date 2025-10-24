@@ -13,124 +13,115 @@ import { fetchUsers, deleteUser, updateUser } from "@/Redux/User/Action.js";
 
 const AdminPage = () => {
     const dispatch = useDispatch();
-    const { user } = useSelector((store) => store);
+    const { users, loading, error } = useSelector((state) => state.user);
+
     useEffect(() => {
-        console.log("Fetching users...");
         dispatch(fetchUsers());
     }, [dispatch]);
-    const handleDelete = (id) => {
+
+    const handleDelete = (userItem) => {
+        if (userItem.role === "ROLE_ADMIN") {
+            alert("❌ Không thể xoá tài khoản Admin!");
+            return;
+        }
         if (window.confirm("Are you sure you want to delete this user?")) {
-            dispatch(deleteUser(id));
+            dispatch(deleteUser(userItem.id));
         }
     };
+
     const handleToggleRole = (userItem) => {
         const newRole = userItem.role === "ROLE_ADMIN" ? "ROLE_USER" : "ROLE_ADMIN";
         dispatch(updateUser(userItem.id, { role: newRole }));
     };
 
-    if (user.loading) {
+    if (loading) {
         return (
             <div className="flex justify-center items-center p-8">
                 <div className="text-gray-500">Loading users...</div>
             </div>
         );
     }
-    if (user.error) {
+
+    if (error) {
         return (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                <h2 className="text-lg font-semibold text-red-800">Error loading users</h2>
-                <p className="text-red-600">{user.error}</p>
-                <button
-                    className="mt-2 px-4 py-2 bg-red-600 text-white rounded"
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center">
+                <h2 className="text-lg font-semibold text-red-800 mb-2">
+                    Error loading users
+                </h2>
+                <p className="text-red-600 mb-4">{error}</p>
+                <Button
+                    variant="destructive"
                     onClick={() => dispatch(fetchUsers())}
                 >
                     Retry
-                </button>
+                </Button>
             </div>
         );
     }
 
-    const users = user.users || [];
-
     return (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03] p-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-                User Management ({users.length} users)
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+            <h2 className="text-2xl text-center font-semibold text-gray-800 mb-6">
+                 User Management
             </h2>
-
             <div className="max-w-full overflow-x-auto">
                 <Table>
-                    <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
+                    <TableHeader className="border-b border-gray-200 bg-gray-50">
                         <TableRow>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                ID
-                            </TableCell>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                Full Name
-                            </TableCell>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                Email
-                            </TableCell>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                Project Size
-                            </TableCell>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                Role
-                            </TableCell>
-                            <TableCell className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                Actions
-                            </TableCell>
+                            <TableCell className="text-center font-semibold">ID</TableCell>
+                            <TableCell className="text-center font-semibold">Full Name</TableCell>
+                            <TableCell className="text-center font-semibold">Email</TableCell>
+                            {/*<TableCell className="text-center font-semibold">Project Size</TableCell>*/}
+                            <TableCell className="text-center font-semibold">Role</TableCell>
+                            <TableCell className="text-center font-semibold">Actions</TableCell>
                         </TableRow>
                     </TableHeader>
 
-                    <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                        {users.length > 0 ? (
-                            users?.map((userItem) => (
-                                <TableRow key={userItem.id}>
-                                    <TableCell className="px-5 py-4 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        {userItem.id}
-                                    </TableCell>
-                                    <TableCell className="px-5 py-4 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        {userItem.fullName || "N/A"}
-                                    </TableCell>
-                                    <TableCell className="px-5 py-4 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        {userItem.email || "N/A"}
-                                    </TableCell>
-                                    <TableCell className="px-5 py-4 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                        {userItem.projectSize ?? 0}
-                                    </TableCell>
-                                    <TableCell className="px-5 py-4 text-start">
+                    <TableBody className="divide-y divide-gray-100">
+                        {Array.isArray(users) && users.length > 0 ? (
+                            users.map((userItem) => (
+                                <TableRow key={userItem.id} className="hover:bg-gray-50">
+                                    <TableCell className="text-center">{userItem.id}</TableCell>
+                                    <TableCell className="text-center">{userItem.fullName || "N/A"}</TableCell>
+                                    <TableCell className="text-center">{userItem.email || "N/A"}</TableCell>
+                                    {/*<TableCell className="text-center">{userItem.projectSize ?? 0}</TableCell>*/}
+                                    <TableCell className="text-center">
                                         <Badge
-                                            className={
+                                            className={`px-3 py-1 ${
                                                 userItem.role === "ROLE_ADMIN"
                                                     ? "bg-green-500 text-white"
                                                     : "bg-blue-500 text-white"
-                                            }
+                                            }`}
                                         >
-                                            {userItem.role ? userItem.role.replace("ROLE_", "") : "N/A"}
+                                            {userItem.role.replace("ROLE_", "")}
                                         </Badge>
                                     </TableCell>
-                                    <TableCell className="px-5 py-4 flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            variant="outline"
-                                            onClick={() => handleToggleRole(userItem)}
-                                        >
-                                            Toggle Role
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            variant="destructive"
-                                            onClick={() => handleDelete(userItem.id)}
-                                        >
-                                            Delete
-                                        </Button>
+                                    <TableCell className="text-center">
+                                        <div className="flex justify-center gap-3">
+
+                                            <Button
+                                                className="bg-blue-600"
+                                                size="sm"
+                                                variant="destructive"
+                                                onClick={() => handleToggleRole(userItem)}
+                                            >
+                                                Toggle Role
+                                            </Button>
+                                            <Button
+                                                className="bg-red-600"
+                                                size="sm"
+                                                variant="destructive"
+                                                onClick={() => handleDelete(userItem)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={6} className="px-5 py-8 text-center text-gray-500">
+                                <TableCell colSpan={6} className="text-center py-8 text-gray-500">
                                     No users found
                                 </TableCell>
                             </TableRow>

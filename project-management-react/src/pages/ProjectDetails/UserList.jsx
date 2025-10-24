@@ -14,9 +14,9 @@ const UserList = ({issuDetails}) => {
     }
   return (
     <>
-    <div className='space-y-2'>
+    <div className='space-y-2 w-full mt-5'>
         <div className='border rounded-md'>
-            <p className='py-2 px-3'> {issuDetails?.assigned?.fullName || "Unassigne"} </p>
+            <p className='py-2 px-3 '> {issuDetails?.assigned?.fullName || "Unassigne"} </p>
 
         </div>
         {project.projectDetails?.team?.map((item)=> <div key={item}

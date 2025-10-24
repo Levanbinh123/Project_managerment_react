@@ -31,13 +31,13 @@ export const deleteComment=(commentId)=>{
             );
             console.log(response)
             dispatch({type:actionTypes.DELETE_COMMENT_SUCCESS,
-                commentId: commentId});
+                payload: commentId });
             return response;
         }catch (e) {
             console.log("error", e);
             dispatch({
                 type:actionTypes.DELETE_COMMENT_FAILURE,
-                error:e.message
+                payload: e.message
             });
 
         }
@@ -62,7 +62,7 @@ export const fetchComments=(issueId)=>{
             console.log("error",e)
 dispatch({
     type:actionTypes.FETCH_COMMENT_FAILURE,
-    error:e.message
+    payload: e.message
 });
         }
     };

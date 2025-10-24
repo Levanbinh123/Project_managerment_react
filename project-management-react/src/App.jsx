@@ -4,17 +4,14 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import ProjectDetails from './pages/ProjectDetails/ProjectDetails'
 import IssueDetails from './pages/IssueDetails/IssueDetails'
-import Subscription from './pages/Subscription/Subscription'
 import Auth from './pages/Auth/Auth'
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getUser} from "@/Redux/Auth/Action.js";
 import {fetchProjects} from "@/Redux/Project/Action.js";
-import UpgradeSuccess from "@/pages/Subscription/UpgradeSuccess.jsx";
 import AccepInvitation from "@/pages/Project/AccepInvitation.jsx";
 import AdminRoute from "@/pages/Admin/AdminRoute.jsx";
 import AdminPage from "@/pages/Admin/AdminPage.jsx";
-import ChatBox from "@/pages/ProjectDetails/ChatBox.jsx";
 import ChatPage from "@/pages/ProjectDetails/ChatPage.jsx";
 function App() {
 const dispatch=useDispatch();
@@ -33,8 +30,8 @@ const{auth}=useSelector(store=>store);
         <Route path='/' element={<Home/>}  />
         <Route path='/project/:id' element={<ProjectDetails/>}  />
         <Route path='/project/:projectId/issue/:issueId' element={<IssueDetails/>}  />
-        <Route path='/upgrade_plan' element={<Subscription/>}  />
-        <Route path='/upgrade/success' element={<UpgradeSuccess/>}  />
+        {/*<Route path='/upgrade_plan' element={<Subscription/>}  />*/}
+        {/*<Route path='/upgrade/success' element={<UpgradeSuccess/>}  />*/}
         <Route path='/accept_invitation' element={<AccepInvitation/>}  />
         <Route path="/chat/:id" element={<ChatPage />} />
         <Route

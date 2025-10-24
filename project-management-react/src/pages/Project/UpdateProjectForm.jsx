@@ -1,26 +1,50 @@
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React from "react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useDispatch } from "react-redux";
-import { createProjects } from "@/Redux/Project/Action.js";
+import {fetchProjects,  updateProjects} from "@/Redux/Project/Action.js"; // <-- Action update
 
-const CreateProjectForm = () => {
+const UpdateProjectForm = ({ project, setOpen }) => {
     const dispatch = useDispatch();
 
     const form = useForm({
         defaultValues: {
-            name: "",
-            description: "",
-            category: "",
-            tags: ["react"],
+            name: project?.name || "",
+            description: project?.description || "",
+            category: project?.category || "",
+            tags: project?.tags || [],
         },
     });
+
+    // Cập nhật lại form nếu project thay đổi
+    useEffect(() => {
+        if (project) {
+            form.reset({
+                name: project.name,
+                description: project.description,
+                category: project.category,
+                tags: project.tags || [],
+            });
+        }
+    }, [project, form]);
 
     const handleTagsChange = (newValue) => {
         const currentTags = form.getValues("tags");
@@ -31,14 +55,16 @@ const CreateProjectForm = () => {
     };
 
     const onSubmit = (data) => {
-        dispatch(createProjects(data));
-        console.log("Created project data:", data);
+        dispatch(updateProjects(project.id,data )).then(() => {
+            setOpen(false);
+            dispatch(fetchProjects());
+        });
     };
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-xl">
             <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-                Create New Project
+                Update Project
             </h2>
 
             <Form {...form}>
@@ -81,7 +107,6 @@ const CreateProjectForm = () => {
                         )}
                     />
 
-                    {/* Category */}
                     <FormField
                         control={form.control}
                         name="category"
@@ -90,9 +115,7 @@ const CreateProjectForm = () => {
                                 <FormControl>
                                     <Select
                                         value={field.value}
-                                        onValueChange={(value) => {
-                                            field.onChange(value);
-                                        }}
+                                        onValueChange={(value) => field.onChange(value)}
                                     >
                                         <SelectTrigger className="w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-200">
                                             <SelectValue placeholder="Category" />
@@ -109,7 +132,6 @@ const CreateProjectForm = () => {
                         )}
                     />
 
-                    {/* Tags */}
                     <FormField
                         control={form.control}
                         name="tags"
@@ -148,20 +170,16 @@ const CreateProjectForm = () => {
                             </FormItem>
                         )}
                     />
-
-                    {/* Submit */}
-                    <DialogClose asChild>
                         <Button
                             type="submit"
-                            className="w-full mt-5 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition"
+                            className="w-full mt-5 bg-blue-500 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition"
                         >
-                            Create Project
+                            Update Project
                         </Button>
-                    </DialogClose>
                 </form>
             </Form>
         </div>
     );
 };
 
-export default CreateProjectForm;
+export default UpdateProjectForm;

@@ -56,19 +56,22 @@ const Signup = () => {
                         </FormItem>}
                     />
 
-                    <FormField 
+
+                    <FormField
                         control={form.control}
                         name="password"
-                        render={({field})=>
-                        <FormItem>
-                            <FormControl>
-                                <Input {...field}
-                                type="text"
-                                className="border w-full border-gray-700 py-5 px-5"
-                                placeholder="password..."/>
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>}
+                        render={({field}) =>
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="password" // Đổi thành password để ẩn mật khẩu
+                                        className="border w-full border-gray-700 py-5 px-5"
+                                        placeholder="Password..."
+                                    />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>}
                     />
 
                             <Button type="submit" className="w-full mt-5">

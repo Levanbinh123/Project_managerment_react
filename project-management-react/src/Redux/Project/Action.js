@@ -12,7 +12,7 @@ import {
     INVITE_PROJECT_REQUEST,
     INVITE_PROJECT_SUCCESS,
     SEARCH_PROJECT_REQUEST,
-    SEARCH_PROJECT_SUCCESS
+    SEARCH_PROJECT_SUCCESS, UPDATE_PROJECT_REQUEST, UPDATE_PROJECT_SUCCESS
 } from "@/Redux/Project/ActionTypes.js";
 import api from "@/config/api.js";
 export const fetchProjects = ({ category, tag }={}  ) => async (dispatch) => {
@@ -55,6 +55,17 @@ export const createProjects = ( projectData ) => async (dispatch) => {
         dispatch({ type: CREATE_PROJECT_SUCCESS, projects: data });
     } catch (e) {
         console.log("create project error:", e.response?.data || e.message);
+    }
+};
+export const updateProjects = ( projectId, projectData ) => async (dispatch) => {
+    dispatch({ type: UPDATE_PROJECT_REQUEST });
+    try {
+        const { data } = await api.patch(`/api/projects/${projectId}`,projectData);
+
+        console.log("update project response:", data);
+        dispatch({ type: UPDATE_PROJECT_SUCCESS, projects: data });
+    } catch (e) {
+        console.log("UPDATE project error:", e.response?.data || e.message);
     }
 };
 export const deleteProjectsById = ({ projectId }) => async (dispatch) => {
