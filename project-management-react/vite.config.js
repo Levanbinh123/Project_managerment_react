@@ -6,7 +6,8 @@ import { defineConfig } from "vite"
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    sourcemap: true
   },
   resolve: {
     alias: {
@@ -20,5 +21,5 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true
-  }
+  },  base: './'
 })
