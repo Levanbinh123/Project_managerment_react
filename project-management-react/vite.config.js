@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: false
   },
   resolve: {
     alias: {
@@ -19,7 +19,7 @@ export default defineConfig({
     global: 'globalThis',
   },
   server: {
-    port: 5173,
+    port: 3000,
     host: true
   },  base: './'
 })
