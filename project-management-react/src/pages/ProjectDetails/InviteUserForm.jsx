@@ -7,47 +7,56 @@ import { useForm } from 'react-hook-form'
 import {useDispatch} from "react-redux";
 import {inviteToProjects} from "@/Redux/Project/Action.js";
 import {useParams} from "react-router-dom";
+
 const InviteUserForm = () => {
     const dispatch=useDispatch();
     const {id}=useParams();
     const form=useForm({
-                //resolver:zod
-                defaultValues:{
-                    email:"",
-                }
-            })
-            const onSubmit=(data)=>{
-                dispatch(inviteToProjects({email: data.email, projectId:id}))
-            }
-  return (
-    <div>
-        <Form {...form}>
+        defaultValues:{
+            email:"",
+        }
+    })
+
+    const onSubmit=(data)=>{
+        dispatch(inviteToProjects({email: data.email, projectId:id}))
+    }
+
+    return (
+        <div>
+            <Form {...form}>
                 <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField control={form.control}
-                    name="email"
-                    render={({field})=><FormItem>
-                        <FormControl>
-                            <Input {...field}
-                            type="text"
-                            className="border w-full border-gray-700 py-5 px-5"
-                            placeholder="user email..."/>
-                        </FormControl>
-                        <FormMessage/>
-                    </FormItem>}
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({field})=>(
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        className="border w-full border-gray-700 py-5 px-5"
+                                        placeholder="user email..."
+                                    />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
                     />
 
-
-                    <DialogClose>
-
-                            <Button type="submit" className="w-full mt-5">
+                    <div className="flex justify-end pt-4">
+                        <DialogClose asChild>
+                            <Button
+                                type="submit"
+                                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                            >
                                 Invite User
                             </Button>
-
-                    </DialogClose>
+                        </DialogClose>
+                    </div>
                 </form>
             </Form>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default InviteUserForm
