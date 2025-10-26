@@ -48,7 +48,6 @@ const CreateCommentForm = ({issueId}) => {
                         <FormMessage/>
                     </FormItem>}
                     />
-
                             <Button type="submit">
                                 save
                             </Button>

@@ -106,5 +106,4 @@ const CreateIssueForm = ({status}) => {
         </div>
     )
 }
-
 export default CreateIssueForm

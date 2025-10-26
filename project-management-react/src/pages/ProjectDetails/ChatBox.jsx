@@ -12,7 +12,6 @@ const ChatBox = () => {
     const {auth, chat}=useSelector(store=>store);
     const {id}=useParams();
     const dispatch=useDispatch();
-
     useEffect(()=>{
         dispatch(fetchChatMessages(chat.chat?.id));
     },[chat.chat?.id])
@@ -25,7 +24,6 @@ const ChatBox = () => {
             }
         ))
         setMessage("");
-        console.log("message", message);
     }
     const handleMessageChange=(e)=>{
         setMessage(e.target.value);

@@ -21,7 +21,6 @@ const Login = () => {
 
     const onSubmit = (data) => {
         dispatch(login(data));
-        console.log("login data", data)
     }
 
     // Xóa lỗi khi người dùng bắt đầu nhập lại

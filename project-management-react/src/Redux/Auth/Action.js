@@ -12,9 +12,7 @@ export const login=userData=>async (dispatch)=>{
     try {
         const {data}=await axios.post(`${API_BASE_URL}/auth/singup`,userData)
             localStorage.setItem("jwt", data.jwt)
-        console.log("JWT from localStorage:", localStorage.getItem("jwt"));
             dispatch({type:LOGIN_SUCCESS, payload:data})
-        console.log("user success", data);
     }catch (e) {
         console.log(e);
     }
@@ -23,7 +21,6 @@ export const register=userData=>async (dispatch)=> {
     dispatch({type: REGISTER_REQUEST})
     try {
         const {data} = await axios.post(`${API_BASE_URL}/auth/register`, userData)
-        console.log("LOGIN success", data);
 
         dispatch({type: REGISTER_SUCCESS, payload: data})
         if(data.jwt){
@@ -45,7 +42,6 @@ export const getUser=()=>async (dispatch)=>{
         });
 
             dispatch({type:GET_SUCCESS, payload:data})
-        console.log("user success", data);
     }catch (e) {
         console.log(e);
     }

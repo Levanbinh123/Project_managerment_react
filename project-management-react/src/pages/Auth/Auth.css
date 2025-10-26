@@ -4,7 +4,6 @@
     box-sizing: border-box;
     font-family: "Poppins", "sans-serif";
 }
-
 .loginContainer {
     display: flex;
     justify-content: center;
@@ -12,11 +11,10 @@
     min-height: 100vh;
     background: #f9f9f9;
 }
-
 .box {
     position: relative;
     background: #ffffff;
-    border: 3px solid #535bf2; /* Giữ viền hồng */
+    border: 3px solid #535bf2;
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);

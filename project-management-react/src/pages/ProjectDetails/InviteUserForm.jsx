@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import {useDispatch} from "react-redux";
 import {inviteToProjects} from "@/Redux/Project/Action.js";
 import {useParams} from "react-router-dom";
-
 const InviteUserForm = () => {
     const dispatch=useDispatch();
     const {id}=useParams();
@@ -15,18 +14,14 @@ const InviteUserForm = () => {
                 //resolver:zod
                 defaultValues:{
                     email:"",
-
                 }
             })
-
             const onSubmit=(data)=>{
                 dispatch(inviteToProjects({email: data.email, projectId:id}))
-
-                console.log("create project data", data)
             }
   return (
     <div>
-                  <Form {...form}>
+        <Form {...form}>
                 <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField control={form.control}
                     name="email"

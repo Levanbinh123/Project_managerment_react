@@ -24,7 +24,7 @@ export const authReducer=(state=initialState, action)=>{
         case GET_SUCCESS:
             return {...state, loading: false, error: null, user: action.payload};
         case LOGOUT:
-            localStorage.removeItem("jwt"); // ✅ clear token khi logout
+            localStorage.removeItem("jwt");
             return { user: null, loading: false, error: null, jwt: null };
         default:
             return state;

@@ -19,7 +19,6 @@ const IssueDetails = () => {
 
     const handleUpdateIssueStatus = (status) => {
         dispatch(updateIssue({ status, id: issueId }))
-        console.log("Updated status:", status);
     };
 
     useEffect(() => {
@@ -82,8 +81,6 @@ const IssueDetails = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Right Sidebar */}
                 <div className='w-full lg:w-[30%] space-y-4'>
                     <Select onValueChange={handleUpdateIssueStatus} defaultValue={issueDetails?.status}>
                         <SelectTrigger className="w-full">
@@ -95,7 +92,6 @@ const IssueDetails = () => {
                             <SelectItem value="done">Done</SelectItem>
                         </SelectContent>
                     </Select>
-
                     <div className='border rounded-lg'>
                         <p className='border-b py-3 px-5 font-medium'>Details</p>
                         <div className='p-5'>

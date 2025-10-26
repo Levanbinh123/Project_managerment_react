@@ -21,10 +21,8 @@ import { tags } from "../ProjectList/ProjectList";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useDispatch } from "react-redux";
 import {fetchProjects,  updateProjects} from "@/Redux/Project/Action.js"; // <-- Action update
-
 const UpdateProjectForm = ({ project, setOpen }) => {
     const dispatch = useDispatch();
-
     const form = useForm({
         defaultValues: {
             name: project?.name || "",

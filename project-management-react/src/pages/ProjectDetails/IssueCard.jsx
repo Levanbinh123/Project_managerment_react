@@ -8,15 +8,12 @@ import UserList from './UserList'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { deleteIssueId } from "@/Redux/Issue/Action.js";
-
 const IssueCard = ({ item, projectId }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const handleIssueDelete = () => {
         dispatch(deleteIssueId(item.id));
     };
-
     return (
         <div>
             <Card className="rounded-md py-1 pb-2">
@@ -29,7 +26,6 @@ const IssueCard = ({ item, projectId }) => {
                             {item.title}
                         </CardTitle>
 
-                        {/* Dropdown Menu cho Actions */}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
@@ -59,7 +55,6 @@ const IssueCard = ({ item, projectId }) => {
                     <div className='flex items-center justify-between'>
                         <p className="text-sm text-gray-600">FBF - {item.id}</p>
 
-                        {/* Dropdown Menu cho Assign User */}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button

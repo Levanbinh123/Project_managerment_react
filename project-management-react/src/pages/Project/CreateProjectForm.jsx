@@ -32,7 +32,6 @@ const CreateProjectForm = () => {
 
     const onSubmit = (data) => {
         dispatch(createProjects(data));
-        console.log("Created project data:", data);
     };
 
     return (
@@ -148,8 +147,6 @@ const CreateProjectForm = () => {
                             </FormItem>
                         )}
                     />
-
-                    {/* Submit */}
                     <DialogClose asChild>
                         <Button
                             type="submit"

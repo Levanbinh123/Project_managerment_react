@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {store} from "@/Redux/Store.js";
 import {assignedUserToIssue} from "@/Redux/Issue/Action.js";
 import {useParams} from "react-router-dom";
 

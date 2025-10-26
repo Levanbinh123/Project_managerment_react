@@ -11,7 +11,7 @@ import {
 const initialState = {
     profile: null,
     users: [],
-    loading: false, // THÊM DÒNG NÀY
+    loading: false,
     error: null,
 };
 
@@ -24,7 +24,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.payload,
-                loading: false, // THÊM loading: false
+                loading: false,
                 error: null
             };
 
@@ -34,7 +34,7 @@ const userReducer = (state = initialState, action) => {
                 users: state.users.map((u) =>
                     u.id === action.payload.id ? action.payload : u
                 ),
-                loading: false, // THÊM loading: false
+                loading: false,
                 error: null,
             };
 
@@ -42,7 +42,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.filter((u) => u.id !== action.payload),
-                loading: false, // THÊM loading: false
+                loading: false,
                 error: null,
             };
 
@@ -51,7 +51,7 @@ const userReducer = (state = initialState, action) => {
         case DELETE_USER_FAILURE:
             return {
                 ...state,
-                loading: false, // THÊM loading: false
+                loading: false,
                 error: action.payload
             };
 

@@ -16,15 +16,12 @@ const ChatPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { auth, chat, project } = useSelector((store) => store);
-
-    // 🔹 Load tin nhắn cũ
     useEffect(() => {
         if (id) {
             dispatch(fetchChatByProjectId(id));
         }
     }, [id, dispatch]);
 
-    // 🔹 Khi Redux chat thay đổi => đồng bộ
     useEffect(() => {
         if (chat.messages) {
             const array = Array.isArray(chat.messages)
@@ -33,12 +30,9 @@ const ChatPage = () => {
             setMessages(array);
         }
     }, [chat.messages]);
-
-    // 🔹 Kết nối WebSocket & nhận tin realtime
     useEffect(() => {
         if (id) {
             connectSocket(id, (newMessage) => {
-                // ✅ chỉ thêm nếu message thuộc project này
                 if (newMessage.chat?.project?.id === parseInt(id)) {
                     setMessages((prev) => {
                         const alreadyExists = prev.some((m) => m.id === newMessage.id);
@@ -49,7 +43,6 @@ const ChatPage = () => {
         }
     }, [id]);
 
-    //  Gửi tin nhắn qua socket (KHÔNG thêm local nữa)
     const handleSendMessage = () => {
         if (!message.trim()) return;
 
@@ -70,7 +63,6 @@ const ChatPage = () => {
         navigate(`/chat/${projectId}`);
         dispatch(fetchChatByProjectId(projectId));
     };
-
     return (
         <div className="container mx-auto shadow-lg rounded-lg bg-white">
             <div className="px-5 py-5 flex justify-between items-center border-b">
@@ -79,9 +71,7 @@ const ChatPage = () => {
                     {!chat.loading && `Messages: ${messages.length}`}
                 </div>
             </div>
-
             <div className="flex flex-row h-[90vh]">
-                {/* Sidebar - danh sách dự án */}
                 <div className="w-1/3 border-r p-3 overflow-y-auto">
                     <h2 className="font-semibold text-lg mb-3">Danh sách dự án</h2>
                     <div className="space-y-5 min-h-[74vh]">
@@ -99,8 +89,6 @@ const ChatPage = () => {
                         ))}
                     </div>
                 </div>
-
-                {/* Khu vực chat chính */}
                 <div className="flex-1 flex flex-col">
                     <div className="p-4 border-b">
                         <h3 className="font-semibold text-lg">
@@ -110,8 +98,6 @@ const ChatPage = () => {
                             {chat.chat?.project?.name || "Loading project..."}
                         </p>
                     </div>
-
-                    {/* Hiển thị tin nhắn */}
                     <ScrollArea className="flex-1 p-5">
                         <div className="flex flex-col gap-4">
                             {chat.loading ? (
@@ -176,8 +162,6 @@ const ChatPage = () => {
                             )}
                         </div>
                     </ScrollArea>
-
-                    {/* Ô nhập tin nhắn */}
                     <div className="border-t p-4">
                         <div className="flex gap-2">
                             <Input
@@ -203,8 +187,6 @@ const ChatPage = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Thông tin dự án */}
                 <div className="w-1/4 border-l p-5">
                     <h2 className="font-semibold text-lg mb-3">Thông tin dự án</h2>
                     {chat.chat?.project ? (
@@ -245,5 +227,4 @@ const ChatPage = () => {
         </div>
     );
 };
-
 export default ChatPage;

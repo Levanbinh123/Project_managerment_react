@@ -7,7 +7,6 @@ export const createComment=(commentData)=>{
             const response=await api.post(
                 '/api/comments',commentData
             );
-            console.log('comment created', response.data)
             dispatch({
                 type:actionTypes.CREATE_COMMENT_SUCCESS,
                 payload: response.data,

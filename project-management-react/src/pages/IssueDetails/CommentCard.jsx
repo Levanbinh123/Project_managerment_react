@@ -57,5 +57,4 @@ const CommentCard = ({ item }) => {
         </div>
     )
 }
-
 export default CommentCard;

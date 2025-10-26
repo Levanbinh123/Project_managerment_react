@@ -18,7 +18,6 @@
                 headers:{Authorization:`Bearer ${token}`},
             });
             dispatch({ type: FETCH_USER_SUCCESS, payload: res.data });
-            console.log("API Response:", res.data);
         } catch (err) {
           dispatch({type:FETCH_USER_FAILURE, payload:err.response?.data||err.message});
         }

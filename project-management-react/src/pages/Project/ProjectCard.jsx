@@ -19,7 +19,6 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import UpdateProjectForm from "@/pages/Project/UpdateProjectForm.jsx";
-
 const ProjectCard = ({ item }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();

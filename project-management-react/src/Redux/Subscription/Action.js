@@ -26,7 +26,6 @@ export const getUserSubscription=(jwt)=>{
         }
     };
 };
-
 export const upgradeSubscription=({planType})=>{
     return async (dispatch)=>{
         dispatch({
@@ -43,7 +42,6 @@ export const upgradeSubscription=({planType})=>{
                 payload:response.data
 
             });
-            console.log("upgrade", response.data);
         }catch (e) {
             console.log("error", e);
             dispatch({

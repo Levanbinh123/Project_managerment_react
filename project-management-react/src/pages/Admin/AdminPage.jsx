@@ -14,26 +14,22 @@ import { fetchUsers, deleteUser, updateUser } from "@/Redux/User/Action.js";
 const AdminPage = () => {
     const dispatch = useDispatch();
     const { users, loading, error } = useSelector((state) => state.user);
-
     useEffect(() => {
         dispatch(fetchUsers());
     }, [dispatch]);
-
     const handleDelete = (userItem) => {
         if (userItem.role === "ROLE_ADMIN") {
-            alert("❌ Không thể xoá tài khoản Admin!");
+            alert(" Không thể xoá tài khoản Admin!");
             return;
         }
         if (window.confirm("Are you sure you want to delete this user?")) {
             dispatch(deleteUser(userItem.id));
         }
     };
-
     const handleToggleRole = (userItem) => {
         const newRole = userItem.role === "ROLE_ADMIN" ? "ROLE_USER" : "ROLE_ADMIN";
         dispatch(updateUser(userItem.id, { role: newRole }));
     };
-
     if (loading) {
         return (
             <div className="flex justify-center items-center p-8">
@@ -41,7 +37,6 @@ const AdminPage = () => {
             </div>
         );
     }
-
     if (error) {
         return (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center">
@@ -58,7 +53,6 @@ const AdminPage = () => {
             </div>
         );
     }
-
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-md">
             <h2 className="text-2xl text-center font-semibold text-gray-800 mb-6">
@@ -76,7 +70,6 @@ const AdminPage = () => {
                             <TableCell className="text-center font-semibold">Actions</TableCell>
                         </TableRow>
                     </TableHeader>
-
                     <TableBody className="divide-y divide-gray-100">
                         {Array.isArray(users) && users.length > 0 ? (
                             users.map((userItem) => (
